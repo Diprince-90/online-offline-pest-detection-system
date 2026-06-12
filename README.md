@@ -1,99 +1,145 @@
-# 🌾 Pest Detection & Information System
+# Pest Detection and Information System
 
-This web-based project is a **Pest Detection and Classification System** specifically built for identifying **jute crop pests** using a custom-trained model via [Teachable Machine](https://teachablemachine.withgoogle.com/). The system allows users to upload an image of a pest, classifies it using a trained model, and then automatically fetches relevant information about the predicted pest using **Google Custom Search API**.
+This is a web-based pest detection app for identifying jute crop pests from uploaded images. It uses a custom Teachable Machine image model running with TensorFlow.js in the browser, then displays the detected pest, confidence score, severity analysis, pest information, and an explainable AI heatmap.
 
----
+The app supports both online and offline information lookup. When online search is enabled and the Google Custom Search API responds successfully, it displays web-based pest information. If online search is unavailable or fails, it falls back to the local `pestData.json` file.
 
-## 🚀 Features
+## Features
 
-- ✅ Upload and preview pest image
-- ✅ Predict pest type using a trained Teachable Machine model
-- ✅ Automatically fetch information about:
-  - What the pest attacks
-  - Its host plant
-  - Methods of control or prevention
-- ✅ Clean and mobile-friendly UI
-- ✅ Top 3 web results are shown dynamically using Google Programmable Search
+- Upload and preview a pest image.
+- Preprocess the image to the model input size before prediction.
+- Classify pests using a trained CNN image model exported from Teachable Machine.
+- Display the top pest prediction and confidence score.
+- Reject unclear images when the confidence is too low or the prediction margin is weak.
+- Show severity analysis as Low, Medium, or High.
+- Provide pest information including cause, symptoms, prevention, and treatment.
+- Work offline using local pest data.
+- Optionally use Google Custom Search for online pest information.
+- Display an explainable AI heatmap showing image regions that influenced the prediction.
+- Show a simple bounding-box style visual guide over the uploaded image.
 
----
+## App Workflow
 
-## 🧠 Technologies Used
+1. **Image Preprocessing**
+   The uploaded image is resized and centered to match the CNN input size.
 
-- **Teachable Machine (Image Model)**
-- **TensorFlow.js**
-- **Vanilla JavaScript**
-- **Google Custom Search API**
-- **CSS3** (for modern UI layout)
-- **HTML5**
+2. **CNN Model**
+   The Teachable Machine image model runs locally in the browser through TensorFlow.js.
 
----
+3. **Pest Detection**
+   The model predicts the most likely pest class.
 
-## 📸 Screenshots
+4. **Confidence Score**
+   The app displays the prediction confidence and checks whether the result is reliable.
 
-| Image | Description |
-|-------|-------------|
-| ![](screenshots/Screenshot1.png) | Homepage and Image Upload |
-| ![](screenshots/Screenshot2.png) | Pest Information Fetched from Google |
-| ![](screenshots/Screenshot3.png) | Prediction Result and Confidence |
-| ![](screenshots/Screenshot4.png) | Full Layout (Responsive Design) |
+5. **Severity Analysis**
+   The app assigns a severity level based on prediction confidence:
+   - High: 92% and above
+   - Medium: 84% to 91.99%
+   - Low: below 84%
 
----
+6. **Pest Information**
+   The app displays cause, symptoms, prevention, and treatment information from either online search or local offline data.
 
-## 🔍 How It Works
+7. **Explainable AI Heatmap**
+   The app uses occlusion sensitivity to generate a heatmap. It hides small parts of the image, runs the model again, and highlights areas that most affect the model's confidence.
 
-1. **Upload Image**  
-   Users select an image of the pest they wish to identify.
+## Technologies Used
 
-2. **Prediction**  
-   The model classifies the image and returns the most probable pest label with a confidence score.
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- TensorFlow.js
+- Teachable Machine image model
+- Google Custom Search API
+- Local JSON data for offline pest information
 
-3. **Pest Information**  
-   Using Google’s Programmable Search API, the system auto-fetches basic, relevant information about the pest, such as:
-   - What crops it affects
-   - Its life cycle
-   - How to control or prevent it
+## Project Structure
 
----
+```text
+.
+├── index.html
+├── style.css
+├── script.js
+├── pestData.json
+├── js/
+│   ├── tf.min.js
+│   └── teachablemachine-image.min.js
+├── my_model/
+│   ├── model.json
+│   ├── metadata.json
+│   └── weights.bin
+└── screenshots/
+```
 
-## 🔧 Setup Guide
+## Screenshots
 
-> Ensure you have a valid Google Programmable Search Engine set to **Search the entire web**, and an API key from Google Cloud Console.
+| Screenshot | Description |
+|---|---|
+| ![](screenshots/image.png) | Prediction result with confidence, severity, pest information, and heatmap |
+| ![](screenshots/Screenshot%202.png) | App interface |
+| ![](screenshots/Screenshot%202026-06-12%20050539.png) | Detection workflow output |
+| ![](screenshots/Screenshot%202026-06-12%20050719.png) | Additional result view |
 
-1. Clone or download the project files.
-2. Place your exported Teachable Machine model inside the `my_model/` folder.
-3. In your JavaScript, replace:
-   ```js
-   const API_KEY = "YOUR_GOOGLE_API_KEY";
-   const CX = "YOUR_CUSTOM_SEARCH_ENGINE_ID";
-   ```
+## Setup Guide
 
-4. Open `index.html` in any browser.
+1. Clone or download the project.
+2. Make sure the exported Teachable Machine model files are inside `my_model/`.
+3. Make sure the local TensorFlow.js files are inside `js/`.
+4. Update the Google API values in `script.js` if you want online search:
 
----
+```js
+const apiKey = "YOUR_GOOGLE_API_KEY";
+const cx = "YOUR_CUSTOM_SEARCH_ENGINE_ID";
+```
 
-## 📄 Project Status
+5. Run the project from a local server. This is recommended because the app loads local JSON and model files.
 
-✅ Complete and functional
-📌 Future improvements could include:
+Example using Node:
 
-* Drawing bounding boxes around detected pests
-* Offline model loading
-* Support for more pest types and training data
+```bash
+npx serve .
+```
 
----
+Then open the localhost URL shown in the terminal.
 
-## 📚 Acknowledgments
+## Offline and Online Modes
 
-* Google Teachable Machine
-* Google Programmable Search Engine
-* TensorFlow\.js Team
-* Jute Pest image dataset used for model training
+The **Use Online Search** checkbox controls whether the app tries Google Custom Search first.
 
----
+If online search is disabled, the internet is unavailable, the API key is invalid, the search quota is exhausted, or Google returns no result, the app uses `pestData.json` and shows **Offline data used**.
 
-## 📬 Contact
+## Explainable AI Heatmap
 
-For collaboration or suggestions, feel free to contact the developer.
+The heatmap is not a separate model. It is an explanation layer added on top of the CNN prediction. Red and orange areas show regions that had stronger influence on the model's prediction. Lighter or blue areas had less influence.
 
-- **Email:** ibahimamanatullahi@gmail.com 
-- **WhatsApp:** +2348145826770
+This helps demonstrate that the system is not only predicting a pest label, but also giving a visual explanation of what part of the image affected the decision.
+
+## Project Status
+
+The app currently includes the full pest detection workflow requested for the project:
+
+- Image preprocessing
+- CNN-based pest detection
+- Confidence score
+- Severity analysis
+- Pest information
+- Cause, symptoms, prevention, and treatment
+- Explainable AI heatmap
+- Offline and online information support
+
+Future improvements could include a more advanced Grad-CAM heatmap, real object detection bounding boxes, more pest classes, and a larger validated dataset.
+
+## Acknowledgments
+
+- Google Teachable Machine
+- TensorFlow.js
+- Google Programmable Search Engine
+- Jute pest image dataset used for model training
+
+## Contact
+
+For collaboration or suggestions, contact the developer.
+
+- Email: ibahimamanatullahi@gmail.com
+- WhatsApp: +2348145826770
