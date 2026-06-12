@@ -32,10 +32,10 @@ This web-based project is a **Pest Detection and Classification System** specifi
 
 | Image | Description |
 |-------|-------------|
-| ![](Screenshot/Screenshot1.png) | Homepage and Image Upload |
-| ![](Screenshot/Screenshot2.png) | Prediction Result and Confidence |
-| ![](Screenshot/Screenshot3.png) | Pest Information Fetched from Google |
-| ![](Screenshot/Screenshot4.png) | Full Layout (Responsive Design) |
+| ![](Screenshots/Screenshot1.png) | Homepage and Image Upload |
+| ![](Screenshots/Screenshot2.png) | Pest Information Fetched from Google |
+| ![](Screenshots/Screenshot3.png) | Prediction Result and Confidence |
+| ![](Screenshots/Screenshot4.png) | Full Layout (Responsive Design) |
 
 ---
 
