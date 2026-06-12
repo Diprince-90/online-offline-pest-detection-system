@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pest Detection System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        #container {
+            max-width: 75%;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #image-preview {
+            margin-bottom: 20px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            /* -- */
+            display: block;
+        }
+
+        #image-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        #bounding-box {
+            position: absolute;
+            border: 2px dashed blue;
+            opacity: 0.6;
+            pointer-events: none;
+            display: none; /* Initially hidden */
+        }
+
+        #label-container {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #007BFF;
+            text-align: left;
+        }
+
+        .prediction {
+            font-size: 18px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #007BFF;
+            border-radius: 5px;
+            background-color: #f0f8ff;
+            text-align: left;
+        }
+
+        #search-info {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        #search-info h2 {
+            color: #007BFF;
+            margin-bottom: 15px;
+        }
+
+        #search-results .result-card {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #fff;
+            border-left: 4px solid #4CAF50;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        #search-results .result-card h3 {
+            margin: 0 0 8px;
+            font-size: 16px;
+        }
+
+        #search-results .result-card p {
+            font-size: 14px;
+            color: #444;
+        }
+
+        #search-results .result-card a {
+            font-size: 13px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        @media screen and (max-width: 600px) {
+            #container {
+                width: 100%;
+                padding: 15px;
+            }
+
+            input[type="file"] {
+                /* width: 100%; */
+                font-size: 14px;
+            }
+
+            .prediction {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Pest  Detection System</h1>
+        <input type="file" id="image-upload" accept="image/*">
+        <!-- <img id="image-preview" alt="" /> -->
+        <div id="image-wrapper">
+            <img id="image-preview" alt="" />
+            <div id="bounding-box"></div>
+        </div>        
+
+        <div id="label-container">
+            <strong>Pest:</strong>
+            <div id="predictions"></div>
+        </div>
+
+        <div id="search-info">
+            <h2>About the Pest</h2>
+            <div id="search-results"></div>
+        </div>        
+    </div>
+
+    <script src="js/tf.min.js"></script>
+    <script src="js/teachablemachine-image.min.js"></script>
+    <script type="text/javascript">
+        const modelURLBase = "./my_model/";
+
+        const apiKey = "AIzaSyDqoFOm-U6tG1tcGMegWvkIjkxElQhNxj4";
+        const cx = "639bd87ba59834b79";
+
+        let model, maxPredictions;
+
+        // Load the image model and setup the file upload
+        async function init() {
+            const modelURL = modelURLBase + "model.json";
+            const metadataURL = modelURLBase + "metadata.json";
+
+            // Load the model and metadata
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+
+            // Handle file upload
+            const fileInput = document.getElementById('image-upload');
+            fileInput.addEventListener('change', handleImageUpload);
+        }
+
+        // Handle the uploaded image
+        async function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Preview the uploaded image
+            const imgPreview = document.getElementById('image-preview');
+            imgPreview.src = window.URL.createObjectURL(file);
+            imgPreview.style.display = 'block';
+
+            // Create an image element for prediction
+            const img = document.createElement('img');
+            img.src = window.URL.createObjectURL(file);
+
+            // Wait for the image to load before prediction
+            img.onload = async () => {
+                const prediction = await model.predict(img);
+                displayPredictions(prediction);
+
+                // Draw bounding box
+                const boundingBox = document.getElementById('bounding-box');
+
+                // Wait until image is rendered
+                setTimeout(() => {
+                    const rect = imgPreview.getBoundingClientRect();
+
+                    // Get actual rendered size of image
+                    const boxWidth = rect.width * 0.6;
+                    const boxHeight = rect.height * 0.6;
+                    const boxLeft = rect.width * 0.2;
+                    const boxTop = rect.height * 0.2;
+
+                    boundingBox.style.width = `${boxWidth}px`;
+                    boundingBox.style.height = `${boxHeight}px`;
+                    boundingBox.style.left = `${boxLeft}px`;
+                    boundingBox.style.top = `${boxTop}px`;
+                    boundingBox.style.display = 'block';
+                }, 100); // short delay to ensure rendering
+            };
+        }
+
+        function fetchPestInfo(pestName) {
+            const query = `${pestName} pest host plant and control`;
+            const url = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(query)}&key=${apiKey}&cx=${cx}`;
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    const top3 = data.items.slice(0, 3).map(item => ({
+                        title: item.title,
+                        snippet: item.snippet,
+                        link: item.link
+                    }));
+
+                    console.log(top3); // You can use this to inject into DOM
+
+                    const searchResults = document.getElementById('search-results');
+                    searchResults.innerHTML = ''; // Clear old results
+
+                    top3.forEach(result => {
+                        const card = document.createElement('div');
+                        card.className = 'result-card';
+                        card.innerHTML = `
+                            <h3>${result.title}</h3>
+                            <p>${result.snippet}</p>
+                            <a href="${result.link}" target="_blank">Read more</a>
+                        `;
+                        searchResults.appendChild(card);
+                    });
+                })
+                .catch(err => console.error("Search Error:", err));
+        }
+
+        // Display predictions based on confidence levels
+        function displayPredictions(predictions) {
+            const predictionContainer = document.getElementById('predictions');
+            predictionContainer.innerHTML = '';  // Clear previous predictions
+
+            // Sort predictions by confidence
+            predictions.sort((a, b) => b.probability - a.probability);
+
+            // Display format: Vehicle Make, Model, and Year
+            const topPrediction = predictions[0];
+            const secondPrediction = predictions[1];
+
+            fetchPestInfo(topPrediction.className);
+
+            if (topPrediction.probability > 0.9) {
+                predictionContainer.innerHTML += `
+                    <div class="prediction">
+                        ${topPrediction.className} <br>
+                        Confidence: ${(topPrediction.probability * 100).toFixed(2)}%
+                    </div>
+                `;
+            } else {
+                predictionContainer.innerHTML += `
+                    <div class="prediction">
+                        ${topPrediction.className} <br>
+                        Confidence: ${(topPrediction.probability * 100).toFixed(2)}%
+                    </div>
+                    <div class="prediction">
+                        ${secondPrediction.className} <br>
+                        Confidence: ${(secondPrediction.probability * 100).toFixed(2)}%
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize the model
+        init();
+    </script>
+</body>
+</html>
