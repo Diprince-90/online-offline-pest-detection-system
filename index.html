@@ -20,7 +20,18 @@
     <input type="file" id="image-upload" accept="image/*" />
     <div id="image-wrapper">
       <img id="image-preview" alt="Uploaded pest image" />
+      <canvas id="heatmap-canvas" aria-label="Explainable AI heatmap"></canvas>
       <div id="bounding-box"></div>
+    </div>
+
+    <div id="pipeline-status">
+      <div class="pipeline-step" id="step-preprocess">Image Preprocessing</div>
+      <div class="pipeline-step" id="step-model">CNN Model</div>
+      <div class="pipeline-step" id="step-detect">Pest Detection</div>
+      <div class="pipeline-step" id="step-confidence">Confidence Score</div>
+      <div class="pipeline-step" id="step-severity">Severity Analysis</div>
+      <div class="pipeline-step" id="step-info">Pest Information</div>
+      <div class="pipeline-step" id="step-heatmap">Explainable AI Heatmap</div>
     </div>
 
     <div id="label-container">
