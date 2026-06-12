@@ -1,0 +1,82 @@
+{
+  "Beet Armyworm": {
+    "description": "A destructive caterpillar that targets a wide range of crops, known for skeletonizing leaves and boring into flowers.",
+    "cause": "Larvae chew leaves, buds, and fruits; skeletonize foliage and bore into flowers.",
+    "solution": "Use Bacillus thuringiensis, spinosad, and remove weeds to disrupt lifecycle."
+  },
+  "Black Hairy": {
+    "description": "A hairy caterpillar that aggressively defoliates plants, leaving only the veins behind.",
+    "cause": "Defoliates plants by feeding on leaves, leaving only veins.",
+    "solution": "Hand-pick caterpillars, apply neem oil or insecticidal soap."
+  },
+  "Cutworm": {
+    "description": "A nocturnal pest that cuts young seedlings at the base, causing sudden wilting and plant death.",
+    "cause": "Cuts seedlings at soil level, causing wilting and plant death.",
+    "solution": "Use soil collars, till soil, apply diatomaceous earth or light traps."
+  },
+  "Jute Aphid": {
+    "description": "A sap-sucking insect that infests jute crops, leading to stunted growth and bushy tops.",
+    "cause": "Sucks sap from jute leaves and stems, causing stunted growth and bushy tops.",
+    "solution": "Spray dimethoate or encourage natural predators like ladybugs."
+  },
+  "Jute Hairy": {
+    "description": "A caterpillar that feeds on green tissues of jute leaves, causing skeletonization and reduced photosynthesis.",
+    "cause": "Feeds on chlorophyllous tissues, causing leaf skeletonization.",
+    "solution": "Use light traps, microbial sprays like Bacillus thuringiensis, or Diazinon."
+  },
+  "Jute Red Mite": {
+    "description": "A tiny pest that pierces leaf cells and sucks sap, leading to yellowing and poor plant health.",
+    "cause": "Pierces leaf cells and sucks sap, leading to yellowing and reduced photosynthesis.",
+    "solution": "Apply sulfur sprays, neem oil, or introduce predatory mites."
+  },
+  "Jute Semilooper": {
+    "description": "A looping caterpillar that feeds on apical leaves and buds, reducing jute fiber yield.",
+    "cause": "Feeds on apical leaves and buds, reducing plant growth and fiber yield.",
+    "solution": "Brush plants with kerosinized rope or spray Sevin pesticide."
+  },
+  "Jute Stem Girdler": {
+    "description": "A beetle that girdles jute stems for egg-laying, causing breakage and fiber loss.",
+    "cause": "Girdles stem at two levels for egg-laying, causing stem breakage and fiber loss.",
+    "solution": "Apply phorate to soil and conserve parasitoids like Neocatolaccus nupserhae."
+  },
+  "Jute Stem Weevil": {
+    "description": "A stem-boring pest that lays eggs inside jute stems, leading to knot formation and shoot withering.",
+    "cause": "Bores into stem and lays eggs, causing knots and shoot withering.",
+    "solution": "Spray carbaryl or destroy stubble after harvest."
+  },
+  "Leaf Beetle": {
+    "description": "A common pest that chews on leaves and stems, weakening plants and reducing photosynthesis.",
+    "cause": "Chews leaves and stems, reducing photosynthesis and plant vigor.",
+    "solution": "Use crop rotation, trap crops, neem oil, or biological predators."
+  },
+  "Mealybug": {
+    "description": "A soft-bodied insect that secretes honeydew, promoting mold growth and stunting plant development.",
+    "cause": "Sucks sap and secretes honeydew, leading to sooty mold and stunted growth.",
+    "solution": "Apply neem oil, introduce ladybugs, or use alcohol swabs for small infestations."
+  },
+  "Pod Borer": {
+    "description": "A larval pest that bores into pods and consumes seeds, causing significant crop yield loss.",
+    "cause": "Bores into pods and feeds on seeds, causing yield loss.",
+    "solution": "Use neem-based sprays, Bacillus thuringiensis, and hand-pick larvae early."
+  },
+  "Scopular Emissaria": {
+    "description": "A moth species whose larvae feed on leaf tissues, creating holes and reducing plant productivity.",
+    "cause": "Feeds on leaf tissues, creating holes and reducing photosynthesis.",
+    "solution": "Apply biological control and pheromone traps to reduce population."
+  },
+  "Termite": {
+    "description": "A soil-dwelling pest that damages plant roots and stems, leading to collapse and death.",
+    "cause": "Damages roots and stems, causing wilting and plant collapse.",
+    "solution": "Deep plowing, orange oil, neem seed bait, or entomopathogenic fungi."
+  },
+  "Termite odontotermes": {
+    "description": "A species of termite that attacks underground plant parts, causing drooping and uprooting.",
+    "cause": "Attacks roots and stems, causing drooping and uprooting of plants.",
+    "solution": "Apply chlorpyrifos to soil and irrigate after broadcasting treatment."
+  },
+  "Yellow Mite": {
+    "description": "A microscopic pest that distorts leaf growth by sucking sap, leading to yellowing and curling.",
+    "cause": "Sucks sap from leaves, causing curling, yellowing, and stunted growth.",
+    "solution": "Use neem extract, pepper spray, and introduce predatory bugs."
+  }
+}

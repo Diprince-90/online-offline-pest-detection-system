@@ -73,7 +73,7 @@ This web-based project is a **Pest Detection and Classification System** specifi
 
 ## 📄 Project Status
 
-✅ Complete and functional as a student project.
+✅ Complete and functional
 📌 Future improvements could include:
 
 * Drawing bounding boxes around detected pests
@@ -95,7 +95,5 @@ This web-based project is a **Pest Detection and Classification System** specifi
 
 For collaboration or suggestions, feel free to contact the developer.
 
-- **Email:** tennwhiterose@gmail.com  
-- **WhatsApp:** +2348148355580  
-- **Twitter:** [@l9z1c0d9](https://x.com/l9z1c0d9), [@ComfyLearn](https://x.com/ComfyLearn), [@SoftBrein](https://x.com/SoftBrein)  
-- **Website:** [SoftBrein](https://softbrein.tech/), [ComfyLearn](https://comfylearn.site/), [ComfyLearn Blog](https://blog.comfylearn.site/)  
+- **Email:** ibahimamanatullahi@gmail.com 
+- **WhatsApp:** +2348145826770
