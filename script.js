@@ -1,5 +1,5 @@
 const modelURLBase = "./my_model/";
-const apiKey = "AIzaSyBruYxVHG3TjPI1tvgehMhAI-XP0R0XLVc";
+const apiKey = "";
 const cx = "a6b73477386be4a19";
 
 let model, maxPredictions;
